@@ -1,23 +1,10 @@
 import argparse
-import csv
-import requests as req
-
-
-def get_data():
-    response = req.get("https://data.stadt-zuerich.ch/dataset/sid_stapo_hundenamen_od1002/download/KUL100OD1002.csv")
-    decoded_response = response.content.decode("utf-8-sig")
-
-    return decoded_response
-
-
-def main(args=None):
-    parsed = get_parser().parse_args(args)
-    run(parsed)
+from wuff_find import find_dog
 
 
 def run(args):
     if args.function.lower() == "find":
-        print("FIND")
+        find_dog(args.name)
     elif args.function.lower() == "stats":
         print("STATS")
     elif args.function.lower() == "create":
@@ -32,5 +19,13 @@ def get_parser():
     return parser
 
 
+# change to args=None for prod
+def main(args):
+    parsed = get_parser().parse_args(args)
+    run(parsed)
+
+
 if __name__ == '__main__':
-    main()
+    # change to main() when in production
+    # main()
+    main(["find", "luna"])
