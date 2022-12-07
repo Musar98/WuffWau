@@ -1,9 +1,4 @@
-from dog_data import get_dog_data
-
-
-def year_handler(dog_name, year):
-    dog_data = get_dog_data()
-
+def year_handler(dog_data, dog_name, year):
     if len(year) > 0:
         return int(year)
 

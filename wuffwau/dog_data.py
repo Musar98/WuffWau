@@ -16,4 +16,4 @@ def get_dog_data():
                                                                                  "SexHundSort",
                                                                                  "AnzHunde"])
 
-    return dog_data_csv_reader
+    return list(dog_data_csv_reader)

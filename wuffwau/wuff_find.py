@@ -5,7 +5,7 @@ from functions import year_handler
 def find_dog(dog_name, year):
     dog_data = get_dog_data()
 
-    year = year_handler(dog_name, year)
+    year = year_handler(dog_data, dog_name, year)
 
     dog_search_results = [f"{row['HundenameText']} {row['GebDatHundJahr']} {row['SexHundLang'][0]}"
                           for row in dog_data
