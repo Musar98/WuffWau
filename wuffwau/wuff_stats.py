@@ -53,7 +53,7 @@ def wuff_stats():
 
     male_v_female_dogs_msg = f"There are {amt_male_dogs} male dogs and {amt_female_dogs} female dogs!"
 
-    header_male_v_female = print_header(len(male_v_female_dogs_msg), "MALE v FEMALE DOGS")
+    header_male_v_female = print_header(len(male_v_female_dogs_msg), "MALE VS FEMALE DOGS")
     footer_male_v_female = print_footer(len(male_v_female_dogs_msg))
 
     footer_longest_name = print_footer(max_len_dog_name)
