@@ -4,10 +4,14 @@ from dog_client import get_dog_data, get_dog_media
 from functions import print_header, print_footer
 
 
-def wuff_create(output_dir):
-    dog_data = get_dog_data()
-    dog_names = list(set([dog["HundenameText"] for dog in dog_data if dog["HundenameText"] != "?"]))
+def wuff_create(output_dir, year):
+    dog_data = get_dog_data(year)
+
+    dog_names = list(set([dog["HundenameText"] for dog in dog_data
+                          if dog["HundenameText"] != "?"]))
+
     dog_birth_years = list(set([dog["GebDatHundJahr"] for dog in dog_data]))
+
     random_dog_name = random.choice(dog_names)
     random_sex = random.choice(["m", "w"])
     random_birth_year = random.choice(dog_birth_years)

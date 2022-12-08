@@ -1,20 +1,27 @@
 import collections
-from functions import print_header, print_footer, process_common_names, dog_names_by_length
+
 from dog_client import get_dog_data
+from functions import print_header, print_footer, process_common_names, dog_names_by_length
 
 
-def wuff_stats():
-    dog_data = get_dog_data()
+def wuff_stats(year):
+    dog_data = get_dog_data(year)
 
-    dog_names = [dog["HundenameText"] for dog in dog_data if dog["HundenameText"] != "?"]
+    dog_names = [dog["HundenameText"] for dog in dog_data if
+                 dog["HundenameText"] != "?"]
 
     male_dog_names = [dog["HundenameText"] for dog in dog_data if
-                      dog["HundenameText"] != "?" and dog["SexHundLang"][0] == "m"]
-    female_dog_names = [dog["HundenameText"] for dog in dog_data if
-                        dog["HundenameText"] != "?" and dog["SexHundLang"][0] == "w"]
+                      dog["HundenameText"] != "?"
+                      and dog["SexHundLang"][0] == "m"]
 
-    amt_male_dogs = len([dog for dog in dog_data if dog["SexHundLang"][0] == "m"])
-    amt_female_dogs = len([dog for dog in dog_data if dog["SexHundLang"][0] == "w"])
+    female_dog_names = [dog["HundenameText"] for dog in dog_data
+                        if dog["HundenameText"] != "?"
+                        and dog["SexHundLang"][0] == "w"]
+
+    amt_male_dogs = len(
+        [dog for dog in dog_data if dog["SexHundLang"][0] == "m"])
+    amt_female_dogs = len(
+        [dog for dog in dog_data if dog["SexHundLang"][0] == "w"])
 
     raw_most_common_dog_names_overall = collections.Counter(dog_names).most_common(10)
     raw_most_common_male_dog_names = collections.Counter(male_dog_names).most_common(10)

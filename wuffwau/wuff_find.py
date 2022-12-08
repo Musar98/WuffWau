@@ -1,16 +1,13 @@
 from dog_client import get_dog_data
-from functions import year_handler, print_header, print_footer
+from functions import print_header, print_footer
 
 
 def find_dog(dog_name, year):
-    dog_data = get_dog_data()
-
-    year = year_handler(dog_data, dog_name, year)
+    dog_data = get_dog_data(year)
 
     dog_search_results = [f"|| - {dog['HundenameText']} {dog['GebDatHundJahr']} {dog['SexHundLang'][0]} ||"
                           for dog in dog_data
-                          if dog["HundenameText"].lower() == dog_name.lower()
-                          and int(dog["StichtagDatJahr"]) == year]
+                          if dog["HundenameText"].lower() == dog_name.lower()]
 
     results_as_string = "\n".join(dog_search_results)
 

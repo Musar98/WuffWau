@@ -1,10 +1,10 @@
 import csv
 import shutil
-
 import requests as req
+from functions import year_handler
 
 
-def get_dog_data():
+def get_dog_data(year):
     response = req.get(
         "https://data.stadt-zuerich.ch/dataset/sid_stapo_hundenamen_od1002/download/KUL100OD1002.csv")
 
@@ -12,7 +12,11 @@ def get_dog_data():
 
     dog_data_csv_reader = csv.DictReader(decoded_and_split_dog_data)
 
-    return list(dog_data_csv_reader)
+    dog_data_as_list = list(dog_data_csv_reader)
+
+    year = year_handler(dog_data_as_list, year)
+
+    return [dog for dog in dog_data_as_list if int(dog["StichtagDatJahr"]) == year]
 
 
 def get_dog_media(dog_name, birth_year, output_dir):
