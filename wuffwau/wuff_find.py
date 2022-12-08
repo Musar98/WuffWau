@@ -1,4 +1,4 @@
-from dog_data import get_dog_data
+from dog_client import get_dog_data
 from functions import year_handler
 
 

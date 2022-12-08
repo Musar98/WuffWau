@@ -1,6 +1,6 @@
 import collections
 from functions import print_header, process_common_names, dog_names_by_length
-from dog_data import get_dog_data
+from dog_client import get_dog_data
 
 
 def wuff_stats():
