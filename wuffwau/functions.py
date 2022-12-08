@@ -16,7 +16,7 @@ def print_header(output_length, title):
 
     full_length = output_length + amt_additional_chars
 
-    if title_length > output_length:
+    if title_length > full_length:
         full_length = title_length + amt_additional_chars
 
     amount_of_leftover_space = full_length - title_length
@@ -32,6 +32,10 @@ def print_header(output_length, title):
     return f"**{full_length * '='}**" \
            f"\n||{start * '*'}{title}{end * '*'}||" \
            f"\n**{full_length * '='}**"
+
+
+def print_footer(output_length):
+    return f"**{(output_length + 4) * '='}**"
 
 
 def process_common_names(raw_names):
