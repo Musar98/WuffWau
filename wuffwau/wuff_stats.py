@@ -3,6 +3,7 @@ from functions import print_header, process_common_names, dog_names_by_length
 from dog_data import get_dog_data
 
 
+# todo implement comparison female v male
 def wuff_stats():
     dog_data = get_dog_data()
 
