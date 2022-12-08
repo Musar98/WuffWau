@@ -34,4 +34,4 @@ def main(args):
 
 if __name__ == '__main__':
     # change to main() when in production
-    main(["create", "luna"])
+    main(["find", "luna"])
