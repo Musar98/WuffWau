@@ -80,4 +80,4 @@ def wuff_stats():
         f"{footer_female}\n"
         f"\n{header_male_v_female}\n"
         f"|| - {male_v_female_dogs_msg} ||\n"
-        f"{footer_male_v_female}")
+        f"{footer_male_v_female}\n")
