@@ -1,4 +1,5 @@
 import argparse
+from wuff_stats import wuff_stats
 from wuff_find import find_dog
 
 
@@ -6,7 +7,7 @@ def run(args):
     if args.function.lower() == "find":
         find_dog(args.name, args.year)
     elif args.function.lower() == "stats":
-        print("STATS")
+        wuff_stats()
     elif args.function.lower() == "create":
         print("CREATE")
 
@@ -28,4 +29,4 @@ def main(args):
 
 if __name__ == '__main__':
     # change to main() when in production
-    main(["find", "luna"])
+    main(["stats", "luna"])

@@ -1,31 +1,61 @@
+import collections
+from functions import print_header, process_common_names, dog_names_by_length
 from dog_data import get_dog_data
-
-
-# Your tool finds and prints various interesting aspects about the given data. Those are:
-# Which is the longest dog name? (if there is a tie, it's okay to print only one, or all of them, whatever you prefer -- also note that the names are cut off unfortunately, you can ignore that)
-# Which is the shortest one? (same as above; also, ? in the data should not count as the shortest name)
-# Which are the top 10 most common names...
-# ...overall?
-# ...for male dogs?
-# ...for female dogs?
-# Hint: a collections.Counter makes this easier.
-# You don't need to preprocess names or e.g. merge similar names, i.e. "Luna" and "Luna-Verena (Mona Lisa)" are two different dogs.
-# How many dogs are male vs. female?
-# Your tool should print all this information in a single run. How the output looks exactly is up to you, as long as all this information is visible.
-# Sample output (your invocation and output may vary):
-# $ wuff stats
-# Shortest Name: Bo
-# Longest Name:  Zar-Lorcan vom Franzosenkeller
-# ... more output omitted ...
 
 
 def wuff_stats():
     dog_data = get_dog_data()
 
-    longest_name = "",
-    shortest_name = "",
-    top_ten_most_common_names_overall = ""
-    top_ten_most_common_names_male = ""
-    top_ten_most_common_names_female = ""
+    dog_names = [dog["HundenameText"] for dog in dog_data if dog["HundenameText"] != "?"]
 
-    pass
+    male_dog_names = [dog["HundenameText"] for dog in dog_data if
+                      dog["HundenameText"] != "?" and dog["SexHundLang"][0] == "m"]
+    female_dog_names = [dog["HundenameText"] for dog in dog_data if
+                        dog["HundenameText"] != "?" and dog["SexHundLang"][0] == "w"]
+
+    raw_most_common_dog_names_overall = collections.Counter(dog_names).most_common(10)
+    raw_most_common_male_dog_names = collections.Counter(male_dog_names).most_common(10)
+    raw_most_common_female_dog_names = collections.Counter(female_dog_names).most_common(10)
+
+    processed_most_common_names_overall = process_common_names(raw_most_common_dog_names_overall)
+
+    processed_most_common_male_dog_names = process_common_names(raw_most_common_male_dog_names)
+
+    processed_most_common_female_dog_names = process_common_names(raw_most_common_female_dog_names)
+
+    join_most_common_dog_names = "\n".join(processed_most_common_names_overall["names_and_occurrences"])
+    join_most_common_male_dog_names = "\n".join(processed_most_common_male_dog_names["names_and_occurrences"])
+    join_most_common_female_dog_names = "\n".join(processed_most_common_female_dog_names["names_and_occurrences"])
+
+    longest_output_most_common_dog_names = processed_most_common_names_overall["longest_output"]
+
+    longest_output_most_common_male_dog_names = processed_most_common_male_dog_names["longest_output"]
+
+    longest_output_most_common_female_dog_names = processed_most_common_female_dog_names["longest_output"]
+
+    max_len_dog_name = max([len(dog_name) for dog_name in dog_names])
+    min_len_dog_name = min([len(dog_name) for dog_name in dog_names])
+
+    longest_names = dog_names_by_length(dog_names, max_len_dog_name)
+    shortest_names = dog_names_by_length(dog_names, min_len_dog_name)
+
+    print_header_longest_name = print_header(max_len_dog_name, "Longest Name(s)")
+    print_header_shortest_names = print_header(min_len_dog_name, "Shortest Name(s)")
+    print_header_most_common_names_overall = print_header(longest_output_most_common_dog_names,
+                                                          "Top 10 most common overall Dog Names")
+    print_header_most_common_male_dog_names = print_header(longest_output_most_common_male_dog_names,
+                                                           "Top 10 most common male Dog Names")
+    print_header_most_common_female_dog_names = print_header(longest_output_most_common_female_dog_names,
+                                                             "Top 10 most common female Dog Names")
+
+    print(
+        f"{print_header_longest_name}"
+        f"\n{longest_names}\n"
+        f"\n{print_header_shortest_names}"
+        f"\n{shortest_names}\n"
+        f"\n{print_header_most_common_names_overall}"
+        f"\n{join_most_common_dog_names}\n"
+        f"\n{print_header_most_common_male_dog_names}"
+        f"\n{join_most_common_male_dog_names}\n"
+        f"\n{print_header_most_common_female_dog_names}"
+        f"\n{join_most_common_female_dog_names}\n")
