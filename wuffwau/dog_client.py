@@ -10,13 +10,7 @@ def get_dog_data():
 
     decoded_and_split_dog_data = response.content.decode("utf-8-sig").splitlines()
 
-    dog_data_csv_reader = csv.DictReader(decoded_and_split_dog_data, fieldnames=["StichtagDatJahr",
-                                                                                 "HundenameText",
-                                                                                 "GebDatHundJahr",
-                                                                                 "SexHundCd",
-                                                                                 "SexHundLang",
-                                                                                 "SexHundSort",
-                                                                                 "AnzHunde"])
+    dog_data_csv_reader = csv.DictReader(decoded_and_split_dog_data)
 
     return list(dog_data_csv_reader)
 
