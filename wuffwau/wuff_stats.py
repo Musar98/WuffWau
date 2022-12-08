@@ -3,7 +3,6 @@ from functions import print_header, print_footer, process_common_names, dog_name
 from dog_client import get_dog_data
 
 
-# todo implement comparison female v male
 def wuff_stats():
     dog_data = get_dog_data()
 
@@ -13,6 +12,9 @@ def wuff_stats():
                       dog["HundenameText"] != "?" and dog["SexHundLang"][0] == "m"]
     female_dog_names = [dog["HundenameText"] for dog in dog_data if
                         dog["HundenameText"] != "?" and dog["SexHundLang"][0] == "w"]
+
+    amt_male_dogs = len([dog for dog in dog_data if dog["SexHundLang"][0] == "m"])
+    amt_female_dogs = len([dog for dog in dog_data if dog["SexHundLang"][0] == "w"])
 
     raw_most_common_dog_names_overall = collections.Counter(dog_names).most_common(10)
     raw_most_common_male_dog_names = collections.Counter(male_dog_names).most_common(10)
@@ -49,6 +51,11 @@ def wuff_stats():
     header_most_common_female_dog_names = print_header(longest_output_most_common_female_dog_names,
                                                        "TOP 10 MOST COMMON FEMALE DOG NAMES")
 
+    male_v_female_dogs_msg = f"There are {amt_male_dogs} male dogs and {amt_female_dogs} female dogs!"
+
+    header_male_v_female = print_header(len(male_v_female_dogs_msg), "MALE v FEMALE DOGS")
+    footer_male_v_female = print_footer(len(male_v_female_dogs_msg))
+
     footer_longest_name = print_footer(max_len_dog_name)
     footer_shortest_name = print_footer(min_len_dog_name)
     footer_overall = print_footer(longest_output_most_common_dog_names)
@@ -70,4 +77,7 @@ def wuff_stats():
         f"{footer_male}\n"
         f"\n{header_most_common_female_dog_names}"
         f"\n{join_most_common_female_dog_names}\n"
-        f"{footer_female}")
+        f"{footer_female}\n"
+        f"\n{header_male_v_female}\n"
+        f"|| - {male_v_female_dogs_msg} ||\n"
+        f"{footer_male_v_female}")
