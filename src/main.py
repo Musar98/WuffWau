@@ -9,6 +9,9 @@ from wuff_stats import wuff_stats
 
 def run(args):
     if args.function.lower() == "find":
+        if args.output_dir:
+            sys.exit(constants.invalid_output_dir_usage)
+
         if not args.name:
             sys.exit(constants.missing_name_option)
 
