@@ -20,13 +20,13 @@ parser_footer = print_footer(len(parser_description))
 
 invalid_output_dir_usage = 'The [-o | --output-dir] OUTPUT_DIR option ' \
                            'is only available for the create function!\n' \
-                           'for additional information run main.py -h'
+                           'for additional information run wuff.py -h'
 
 invalid_name_usage = 'The [-n | --name] NAME option is only available for the create function!\n' \
-                     'for additional information run main.py -h'
+                     'for additional information run wuff.py -h'
 
 missing_name_option = 'Please provide a name [-n | --name] NAME for the find function!\n' \
-                      'for additional information run main.py -h'
+                      'for additional information run wuff.py -h'
 
 function_help_message = "available functions: find, stats, create\n" \
                         "----------------------------------------\n" \

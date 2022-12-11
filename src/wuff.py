@@ -49,10 +49,10 @@ def get_parser():
     return parser
 
 
-def main(args=None):
+def wuff(args=None):
     parsed = get_parser().parse_args(args)
     run(parsed)
 
 
 if __name__ == '__main__':
-    main()
+    wuff()
