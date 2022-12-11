@@ -4,8 +4,8 @@ from functions import print_header, print_footer
 
 current_dir = pathlib.Path.cwd()
 
-request_error = "Oops... an Error occurred while trying to get the dog data. " \
-                "Check your network connection and try again."
+request_error = "Oops... an Error occurred while trying to make a network request. " \
+                "Please check your network connection and try again."
 
 req_err_header = print_header(len(request_error), "ERROR")
 req_err_footer = print_footer(len(request_error))

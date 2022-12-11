@@ -6,7 +6,7 @@ def year_handler(dog_data, year):
     max_year = max(years_with_available_data)
     min_year = min(years_with_available_data)
 
-    if len(year) == 0:
+    if year == "default":
         return max_year
 
     try:

@@ -12,14 +12,14 @@ from functions import year_handler
 def get_dog_data(year):
     dog_data_url = "https://data.stadt-zuerich.ch/dataset/sid_stapo_hundenamen_od1002/download/KUL100OD1002.csv"
     try:
-        response = req.get(dog_data_url)
+        dog_data = req.get(dog_data_url)
 
     except req.RequestException:
         print(f"{req_err_header}")
         sys.exit(f"|| - {request_error} ||\n"
                  f"{req_err_footer}")
 
-    decoded_and_split_dog_data = response.content.decode("utf-8-sig").splitlines()
+    decoded_and_split_dog_data = dog_data.content.decode("utf-8-sig").splitlines()
 
     dog_data_csv_reader = csv.DictReader(decoded_and_split_dog_data)
 
@@ -32,11 +32,21 @@ def get_dog_data(year):
     return dog_data_for_year
 
 
-def get_dog_media(dog_name, birth_year, output_dir):
+def download_random_dog_media(dog_name, birth_year, output_dir):
+    if not output_dir:
+        output_dir = current_dir
+
     if output_dir != current_dir:
         output_dir = pathlib.Path(output_dir)
 
-    random_dog_media = req.get("https://random.dog/woof.json")
+    try:
+        random_dog_media = req.get("https://random.dog/woof.json")
+
+    except req.RequestException:
+        print(f"{req_err_header}")
+        sys.exit(f"|| - {request_error} ||\n"
+                 f"{req_err_footer}")
+
     random_dog_media_as_json = random_dog_media.json()
 
     download_url = random_dog_media_as_json["url"]
@@ -45,7 +55,13 @@ def get_dog_media(dog_name, birth_year, output_dir):
 
     file_path_and_name = f"{output_dir}/{dog_name}_{birth_year}.{file_extension}"
 
-    download_response = req.get(download_url, stream=True)
+    try:
+        download_response = req.get(download_url, stream=True)
+
+    except req.RequestException:
+        print(f"{req_err_header}")
+        sys.exit(f"|| - {request_error} ||\n"
+                 f"{req_err_footer}")
 
     try:
         with open(file_path_and_name, 'wb') as new_dog_file:

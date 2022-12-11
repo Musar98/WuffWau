@@ -39,10 +39,9 @@ def get_parser():
 
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-n", "--name", help=constants.name_help_message)
-    group.add_argument("-o,", "--output-dir",
-                       help=constants.output_dir_help_message)
+    group.add_argument("-o,", "--output-dir", help=constants.output_dir_help_message)
 
-    parser.add_argument("-y", "--year", default="", help=constants.year_help_message)
+    parser.add_argument("-y", "--year", default="default", help=constants.year_help_message)
 
     return parser
 

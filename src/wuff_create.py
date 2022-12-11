@@ -1,11 +1,10 @@
 import random
 
-from dog_client import get_dog_data, get_dog_media
+from dog_client import get_dog_data, download_random_dog_media
 from functions import print_header, print_footer
-from constants import current_dir
 
 
-def wuff_create(year, output_dir=current_dir):
+def wuff_create(output_dir, year):
     dog_data = get_dog_data(year)
 
     dog_names = list(set([dog["HundenameText"] for dog in dog_data
@@ -17,7 +16,7 @@ def wuff_create(year, output_dir=current_dir):
     random_sex = random.choice(["m", "w"])
     random_birth_year = random.choice(dog_birth_years)
 
-    generated_file_name_and_path = get_dog_media(random_dog_name, random_birth_year, output_dir)
+    generated_file_name_and_path = download_random_dog_media(random_dog_name, random_birth_year, output_dir)
 
     path_information = f"The image of the new dog can be found here: {generated_file_name_and_path}"
     max_output_len = len(path_information)
