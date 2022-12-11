@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "wuffwau"
 version = "0.1.0"
-description = ""
+description = "CLI application to access dog data from zurich."
 authors = ["Musa Rochi"]
 readme = "README.md"
 

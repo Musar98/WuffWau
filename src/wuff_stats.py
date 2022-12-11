@@ -7,30 +7,25 @@ from functions import print_header, print_footer, process_common_names, dog_name
 def wuff_stats(year):
     dog_data = get_dog_data(year)
 
-    dog_names = [dog["HundenameText"] for dog in dog_data if
-                 dog["HundenameText"] != "?"]
+    dog_names = [dog["HundenameText"] for dog in dog_data if dog["HundenameText"] != "?"]
 
-    male_dog_names = [dog["HundenameText"] for dog in dog_data if
-                      dog["HundenameText"] != "?"
+    male_dog_names = [dog["HundenameText"] for dog in dog_data
+                      if dog["HundenameText"] != "?"
                       and dog["SexHundLang"][0] == "m"]
 
     female_dog_names = [dog["HundenameText"] for dog in dog_data
                         if dog["HundenameText"] != "?"
                         and dog["SexHundLang"][0] == "w"]
 
-    amt_male_dogs = len(
-        [dog for dog in dog_data if dog["SexHundLang"][0] == "m"])
-    amt_female_dogs = len(
-        [dog for dog in dog_data if dog["SexHundLang"][0] == "w"])
+    amt_male_dogs = len([dog for dog in dog_data if dog["SexHundLang"][0] == "m"])
+    amt_female_dogs = len([dog for dog in dog_data if dog["SexHundLang"][0] == "w"])
 
     raw_most_common_dog_names_overall = collections.Counter(dog_names).most_common(10)
     raw_most_common_male_dog_names = collections.Counter(male_dog_names).most_common(10)
     raw_most_common_female_dog_names = collections.Counter(female_dog_names).most_common(10)
 
     processed_most_common_names_overall = process_common_names(raw_most_common_dog_names_overall)
-
     processed_most_common_male_dog_names = process_common_names(raw_most_common_male_dog_names)
-
     processed_most_common_female_dog_names = process_common_names(raw_most_common_female_dog_names)
 
     join_most_common_dog_names = "\n".join(processed_most_common_names_overall["names_and_occurrences"])
@@ -38,9 +33,7 @@ def wuff_stats(year):
     join_most_common_female_dog_names = "\n".join(processed_most_common_female_dog_names["names_and_occurrences"])
 
     longest_output_most_common_dog_names = processed_most_common_names_overall["longest_output"]
-
     longest_output_most_common_male_dog_names = processed_most_common_male_dog_names["longest_output"]
-
     longest_output_most_common_female_dog_names = processed_most_common_female_dog_names["longest_output"]
 
     max_len_dog_name = max([len(dog_name) for dog_name in dog_names])
@@ -59,7 +52,6 @@ def wuff_stats(year):
                                                        "TOP 10 MOST COMMON FEMALE DOG NAMES")
 
     male_v_female_dogs_msg = f"There are {amt_male_dogs} male dogs and {amt_female_dogs} female dogs!"
-
     header_male_v_female = print_header(len(male_v_female_dogs_msg), "MALE VS FEMALE DOGS")
     footer_male_v_female = print_footer(len(male_v_female_dogs_msg))
 
@@ -87,4 +79,5 @@ def wuff_stats(year):
         f"{footer_female}\n"
         f"\n{header_male_v_female}\n"
         f"|| - {male_v_female_dogs_msg} ||\n"
-        f"{footer_male_v_female}\n")
+        f"{footer_male_v_female}\n"
+    )

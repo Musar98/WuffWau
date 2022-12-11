@@ -1,3 +1,5 @@
+import sys
+
 from dog_client import get_dog_data
 from functions import print_header, print_footer
 
@@ -8,6 +10,9 @@ def find_dog(dog_name, year):
     dog_search_results = [f"|| - {dog['HundenameText']} {dog['GebDatHundJahr']} {dog['SexHundLang'][0]} ||"
                           for dog in dog_data
                           if dog["HundenameText"].lower() == dog_name.lower()]
+
+    if len(dog_search_results) == 0:
+        sys.exit(f"No Dogs with the name: {dog_name} have been found")
 
     results_as_string = "\n".join(dog_search_results)
 
