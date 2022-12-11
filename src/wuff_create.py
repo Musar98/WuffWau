@@ -2,9 +2,10 @@ import random
 
 from dog_client import get_dog_data, get_dog_media
 from functions import print_header, print_footer
+from constants import current_dir
 
 
-def wuff_create(output_dir, year):
+def wuff_create(year, output_dir=current_dir):
     dog_data = get_dog_data(year)
 
     dog_names = list(set([dog["HundenameText"] for dog in dog_data

@@ -15,7 +15,7 @@ def run(args):
         find_dog(args.name, args.year)
 
     elif args.function.lower() == "stats":
-        if args.output_dir != constants.current_dir:
+        if args.output_dir:
             sys.exit(constants.invalid_output_dir_usage)
         if args.name:
             sys.exit(constants.invalid_name_usage)
@@ -39,7 +39,7 @@ def get_parser():
 
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-n", "--name", help=constants.name_help_message)
-    group.add_argument("-o,", "--output-dir", default=constants.current_dir,
+    group.add_argument("-o,", "--output-dir",
                        help=constants.output_dir_help_message)
 
     parser.add_argument("-y", "--year", default="", help=constants.year_help_message)
