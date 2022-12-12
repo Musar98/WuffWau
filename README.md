@@ -3,9 +3,10 @@ This command-line tool offers various lookup operations on the open data of the 
 which can be found here: https://data.stadt-zuerich.ch/dataset/sid_stapo_hundenamen_od1002
 
 ## Working with the CLI
-1. Open up a terminal and navigate to the src folder of this project.
-2. Run the wuff.py file with python (e.g. python3 wuff.py) this will display more information
-about the CLI usage and an example
+1. Open up a terminal and navigate to the project folder.
+2. Run poetry install, to install the dependencies for the project.
+3. Navigate to the src folder and run the wuff.py file with python (e.g. python3 wuff.py) this will display more information
+about the CLI usage and an example.
 
 ### Additional information
 The projects dependencies and packaging is managed with poetry (https://python-poetry.org)
