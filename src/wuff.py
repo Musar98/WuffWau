@@ -11,10 +11,8 @@ def run(args):
     if args.function.lower() == "find":
         if args.output_dir:
             sys.exit(constants.invalid_output_dir_msg)
-
         if not args.name:
             sys.exit(constants.missing_name_option_msg)
-
         find_dog(args.name, args.year)
 
     elif args.function.lower() == "stats":
@@ -22,13 +20,11 @@ def run(args):
             sys.exit(constants.invalid_output_dir_msg)
         if args.name:
             sys.exit(constants.invalid_name_usage_msg)
-
         wuff_stats(args.year)
 
     elif args.function.lower() == "create":
         if args.name:
             sys.exit(constants.invalid_name_usage_msg)
-
         wuff_create(args.output_dir, args.year)
 
 
