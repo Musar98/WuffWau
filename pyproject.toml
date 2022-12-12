@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "wuffwau"
+name = "src"
 version = "0.1.0"
 description = "CLI application to access dog data from zurich."
 authors = ["Musa Rochi"]

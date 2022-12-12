@@ -8,4 +8,5 @@ which can be found here: https://data.stadt-zuerich.ch/dataset/sid_stapo_hundena
 about the CLI usage and an example
 
 ### Additional information
-The minimum required version of python to run the script is python 3.6
+The projects dependencies and packaging is managed with poetry (https://python-poetry.org)\
+The minimum required version of python to run the script is python 3.10 (defined in src/pyproject.toml)
