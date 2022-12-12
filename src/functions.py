@@ -48,7 +48,25 @@ def print_header(output_length, title):
 
 
 def print_footer(output_length):
+    # output length has 8 additional special chars
+    # here 4 are filled with "*" so +4 are left to be filled with "="
     return f"**{(output_length + 4) * '='}**"
+
+
+def print_msg_builder(title, msg_body, additional_msg=""):
+    header = print_header(len(msg_body), title)
+    footer = print_footer(len(msg_body))
+
+    if len(additional_msg) > 0:
+        return f"{header}\n" \
+               f"|| - {msg_body} ||\n" \
+               f"|| - {additional_msg} ||\n" \
+               f"{footer}"
+
+    else:
+        return f"{header}\n" \
+               f"|| - {msg_body} ||\n" \
+               f"{footer}"
 
 
 def process_common_names(raw_names):

@@ -5,7 +5,7 @@ import sys
 
 import requests as req
 
-from constants import request_error, req_err_header, req_err_footer, current_dir
+from constants import request_error, current_dir
 from functions import year_handler
 
 
@@ -15,9 +15,7 @@ def get_dog_data(year):
         dog_data = req.get(dog_data_url)
 
     except req.RequestException:
-        print(f"{req_err_header}")
-        sys.exit(f"|| - {request_error} ||\n"
-                 f"{req_err_footer}")
+        sys.exit(request_error)
 
     decoded_and_split_dog_data = dog_data.content.decode("utf-8-sig").splitlines()
 
@@ -43,9 +41,7 @@ def download_random_dog_media(dog_name, birth_year, output_dir):
         random_dog_media = req.get("https://random.dog/woof.json")
 
     except req.RequestException:
-        print(f"{req_err_header}")
-        sys.exit(f"|| - {request_error} ||\n"
-                 f"{req_err_footer}")
+        sys.exit(request_error)
 
     random_dog_media_as_json = random_dog_media.json()
 
@@ -59,9 +55,7 @@ def download_random_dog_media(dog_name, birth_year, output_dir):
         download_response = req.get(download_url, stream=True)
 
     except req.RequestException:
-        print(f"{req_err_header}")
-        sys.exit(f"|| - {request_error} ||\n"
-                 f"{req_err_footer}")
+        sys.exit(request_error)
 
     try:
         with open(file_path_and_name, 'wb') as new_dog_file:

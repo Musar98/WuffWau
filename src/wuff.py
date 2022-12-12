@@ -10,47 +10,49 @@ from wuff_stats import wuff_stats
 def run(args):
     if args.function.lower() == "find":
         if args.output_dir:
-            sys.exit(constants.invalid_output_dir_usage)
+            sys.exit(constants.invalid_output_dir_msg)
 
         if not args.name:
-            sys.exit(constants.missing_name_option)
+            sys.exit(constants.missing_name_option_msg)
 
         find_dog(args.name, args.year)
 
     elif args.function.lower() == "stats":
         if args.output_dir:
-            sys.exit(constants.invalid_output_dir_usage)
+            sys.exit(constants.invalid_output_dir_msg)
         if args.name:
-            sys.exit(constants.invalid_name_usage)
+            sys.exit(constants.invalid_name_usage_msg)
 
         wuff_stats(args.year)
 
     elif args.function.lower() == "create":
         if args.name:
-            sys.exit(constants.invalid_name_usage)
+            sys.exit(constants.invalid_name_usage_msg)
 
         wuff_create(args.output_dir, args.year)
 
 
 def get_parser():
-    parser = argparse.ArgumentParser(description=f"{constants.parser_header}\n"
-                                                 f"|| - {constants.parser_description} ||\n"
-                                                 f"{constants.parser_footer}",
-                                     formatter_class=argparse.RawTextHelpFormatter)
+    parser = argparse.ArgumentParser(description=constants.parser_description,
+                                     formatter_class=argparse.RawTextHelpFormatter, usage=argparse.SUPPRESS)
 
     parser.add_argument("function", help=constants.function_help_message)
+    parser.add_argument("-y", "--year", default="default", help=constants.year_help_message)
 
     group = parser.add_mutually_exclusive_group()
     group.add_argument("-n", "--name", help=constants.name_help_message)
     group.add_argument("-o,", "--output-dir", help=constants.output_dir_help_message)
 
-    parser.add_argument("-y", "--year", default="default", help=constants.year_help_message)
-
     return parser
 
 
 def wuff(args=None):
-    parsed = get_parser().parse_args(args)
+    if len(sys.argv) == 1 and sys.argv[0] == "wuff.py":
+        sys.exit(constants.parser_description)
+
+    parser = get_parser()
+    parsed = parser.parse_args(args)
+
     run(parsed)
 
 

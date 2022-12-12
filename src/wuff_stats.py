@@ -1,7 +1,7 @@
 import collections
 
 from dog_client import get_dog_data
-from functions import print_header, print_footer, process_common_names, dog_names_by_length
+from functions import print_header, print_footer, process_common_names, dog_names_by_length, print_msg_builder
 
 
 def wuff_stats(year):
@@ -51,9 +51,9 @@ def wuff_stats(year):
     header_most_common_female_dog_names = print_header(longest_output_most_common_female_dog_names,
                                                        "TOP 10 MOST COMMON FEMALE DOG NAMES")
 
-    male_v_female_dogs_msg = f"There are {amt_male_dogs} male dogs and {amt_female_dogs} female dogs!"
-    header_male_v_female = print_header(len(male_v_female_dogs_msg), "MALE VS FEMALE DOGS")
-    footer_male_v_female = print_footer(len(male_v_female_dogs_msg))
+    male_vs_female_dogs_msg_body = f"There are {amt_male_dogs} male dogs and {amt_female_dogs} female dogs!"
+
+    male_vs_female_dogs_msg = print_msg_builder("MALE VS FEMALE DOGS", male_vs_female_dogs_msg_body)
 
     footer_longest_name = print_footer(max_len_dog_name)
     footer_shortest_name = print_footer(min_len_dog_name)
@@ -77,7 +77,5 @@ def wuff_stats(year):
         f"\n{header_most_common_female_dog_names}"
         f"\n{join_most_common_female_dog_names}\n"
         f"{footer_female}\n"
-        f"\n{header_male_v_female}\n"
-        f"|| - {male_v_female_dogs_msg} ||\n"
-        f"{footer_male_v_female}\n"
+        f"\n{male_vs_female_dogs_msg}\n"
     )
