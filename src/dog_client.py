@@ -6,7 +6,7 @@ import sys
 import requests as req
 
 from constants import request_error, current_dir
-from functions import year_handler
+from functions import year_handler, print_msg_builder
 
 
 def get_dog_data(year):
@@ -61,8 +61,18 @@ def download_random_dog_media(dog_name, birth_year, output_dir):
         with open(file_path_and_name, 'wb') as new_dog_file:
             shutil.copyfileobj(download_response.raw, new_dog_file)
         del download_response
+
     except FileNotFoundError:
-        sys.exit(f"Can not find the specified directory: {output_dir}\n"
-                 f"Please make sure you have entered a valid directory.")
+        err_msg = print_msg_builder("DIRECTORY NOT FOUND", f"Can not find the specified path/directory: {output_dir}",
+                                    "Please make sure you have entered a valid directory.  ")
+
+        sys.exit(err_msg)
+
+    except PermissionError:
+        err_msg = print_msg_builder("PERMISSION ERROR",
+                                    "Permission Denied, please make sure you are allowed to create",
+                                    f"files in the specified directory: {output_dir}, or try to run ||\n"
+                                    f"|| - the previous command with administer privileges")
+        sys.exit(err_msg)
 
     return file_path_and_name

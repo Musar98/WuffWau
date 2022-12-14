@@ -62,7 +62,7 @@ function_help_message = "available functions: find, stats, create\n" \
 
 name_help_message = "Add a name for the find function to search for dogs by the given name."
 
-output_dir_help_message = "Specify a directory for the create function, " \
+output_dir_help_message = "Specify a directory/path for the create function, " \
                           "in which the file of the created dog should be saved."
 
 year_help_message = "Select a year for which the dog data should be filtered,\n" \

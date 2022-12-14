@@ -5,20 +5,28 @@ def year_handler(dog_data, year):
     years_with_available_data = set([int(row["StichtagDatJahr"]) for row in dog_data])
     max_year = max(years_with_available_data)
     min_year = min(years_with_available_data)
+    valid_years_msg = f"Please choose a year between {min_year} and {max_year} (both inclusive)"
+    invalid_year_msg = "The year must be a positive integer!"
 
     if year == "default":
         return max_year
 
     try:
         year = int(year)
+
     except ValueError:
-        sys.exit("The year must be an integer.")
+        error_msg = print_msg_builder("ERROR", invalid_year_msg)
+        sys.exit(error_msg)
 
     if min_year <= year <= max_year:
         return year
 
+    elif year < 0:
+        error_msg = print_msg_builder("ERROR", invalid_year_msg)
+        sys.exit(error_msg)
+
     sys.exit(f"Unfortunately, there is no data available for the year: {year}\n"
-             f"Please choose a year between {min_year} and {max_year} (both inclusive)")
+             f"{valid_years_msg}")
 
 
 def print_header(output_length, title):
