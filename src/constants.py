@@ -2,6 +2,8 @@ import pathlib
 
 from functions import print_msg_builder
 
+parser_functions = ["find", "stats", "create"]
+
 current_dir = pathlib.Path.cwd()
 
 request_error_body = "Oops... an Error occurred while trying to make a network request. " \
@@ -10,13 +12,15 @@ request_error_body = "Oops... an Error occurred while trying to make a network r
 request_error = print_msg_builder("NETWORK REQUEST ERROR", request_error_body)
 
 parser_description_title = "Wuff and Wau"
-parser_description_body = "This command-line tool offers various lookup operations on the open data of the " \
+parser_description_body = "This command-line tool offers a 'find' and 'stats' operation on the open data of the " \
                           "registered dogs in the city of Zurich."
 
-parser_usage = "usage: wuff.py 'function' '-option' 'option value' ||\n" \
+parser_usage = "Additionally you can create your own dog, with a random name, birth year, sex and media.\n" \
+               "|| - usage: wuff.py 'function' '-option' 'option value'||\n" \
                "|| - example: wuff.py find(=function) -n(=option) Luna(=option value) ||\n" \
+               "|| - please keep in mind that the 'function' is required ! ||\n" \
                "|| - options can be chained: wuff.py find -n Luna -y 2020 ||\n" \
-               "|| - add the [-h | --help] flag to display the help message"
+               "|| - add the [-h | --help] flag to any command to display this message and the info below"
 
 parser_description = print_msg_builder(parser_description_title, parser_description_body, parser_usage)
 
@@ -34,8 +38,11 @@ function_help_message = "available functions: find, stats, create\n" \
                         "----------------------------------------\n" \
                         "find:\n" \
                         "-----\n" \
-                        "Search for dogs by a given name.\n" \
-                        "required option(s): [-n | --name] NAME\n" \
+                        'Search for dogs by a given name.\n' \
+                        'If the name contains spaces e.g. Lord Nelson,\n' \
+                        'you have to wrap the name in quotes: "Lord Nelson"\n' \
+                        "\nReturns the dogs name, birth year and sex\n" \
+                        "\nrequired option(s): [-n | --name] NAME\n" \
                         "optional option(s): [-y | --year] YEAR\n" \
                         "---------------------------------------------------------------\n" \
                         "stats:\n" \
@@ -47,24 +54,33 @@ function_help_message = "available functions: find, stats, create\n" \
                         "- Top 10 most common Male Dog Names\n" \
                         "- Top 10 most common Female Dog Names\n" \
                         "- Amount of Male Dog Names and Female Dog Names\n" \
-                        "required option(s): NO REQUIRED OPTION(S)\n" \
+                        "\nrequired option(s): NO REQUIRED OPTION(S)\n" \
                         "optional option(s): [-y | --year] YEAR\n" \
                         "---------------------------------------------------------------\n" \
                         "create:\n" \
                         "-------\n" \
                         "Creates a new dog with a random name, random birth year,\n" \
                         "random sex and a random dog media.\n" \
-                        "The newly created dog will be saved to a specified directory.\n" \
-                        "The name of the created dog file will be in the following format:\n" \
+                        "The newly created dog will be saved as a file to a specified directory.\n" \
+                        "The name of the file will be in the following format:\n" \
                         "dogname_birthyear.file-extension\n" \
-                        "required option(s): NO REQUIRED OPTION(S)\n" \
-                        "optional option(s): [-o | --output-dir] OUTPUT_DIR"
+                        "\nrequired option(s): NO REQUIRED OPTION(S)\n" \
+                        "optional option(s): [-o | --output-dir] OUTPUT_DIR\n" \
+                        "                    [-y | --year] YEAR\n" \
+                        "--------------------------------------------------------------------------"
 
-name_help_message = "Add a name for the find function to search for dogs by the given name."
+name_help_message = 'Add a name for the find function to search for dogs by the given name.\n' \
+                    'If the name contains spaces e.g. Lord Nelson, you have to wrap the name in quotes: "Lord Nelson"'
 
-output_dir_help_message = "Specify a directory/path for the create function, " \
-                          "in which the file of the created dog should be saved."
+output_dir_help_message = "Specify a directory/path for the create function,\n" \
+                          "in which the file of the created dog should be saved.\n" \
+                          "If no path is provided, the file will be created in the current directory."
 
-year_help_message = "Select a year for which the dog data should be filtered,\n" \
-                    "if no year is passed, the latest year " \
-                    "with available data will be chosen."
+year_help_message = "Select a year for which the dog data should be filtered.\n" \
+                    "If no year is provided, the latest year with available data will be taken."
+
+missing_function_parameter = print_msg_builder("NO VALID FUNCTION PROVIDED", "The function argument is required !",
+                                               "available functions: find,stats,create\n"
+                                               "|| - For additional information,\n"
+                                               "||   add the [-h | --help] flag\n"
+                                               "||   to your previous command.")

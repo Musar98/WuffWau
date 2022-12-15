@@ -34,19 +34,26 @@ def get_parser():
 
     parser.add_argument("function", help=constants.function_help_message)
     parser.add_argument("-y", "--year", default="default", help=constants.year_help_message)
-
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument("-n", "--name", help=constants.name_help_message)
-    group.add_argument("-o,", "--output-dir", help=constants.output_dir_help_message)
+    parser.add_argument("-n", "--name", help=constants.name_help_message)
+    parser.add_argument("-o,", "--output-dir", help=constants.output_dir_help_message)
 
     return parser
 
 
 def wuff(args=None):
-    if len(sys.argv) == 1 and sys.argv[0] == "wuff.py":
-        sys.exit(constants.parser_description)
-
     parser = get_parser()
+    if len(sys.argv) == 1 and "wuff.py" in sys.argv[0]:
+        parser.print_help()
+        sys.exit()
+
+    elif not any(item.lower() in sys.argv for item in constants.parser_functions):
+        if "-h" in sys.argv or "--h" in sys.argv:
+            parser.print_help()
+            sys.exit()
+
+        else:
+            sys.exit(constants.missing_function_parameter)
+
     parsed = parser.parse_args(args)
 
     run(parsed)

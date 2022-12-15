@@ -9,6 +9,9 @@ def year_handler(dog_data, year):
     invalid_year_msg = "The year must be a positive integer!"
 
     if year == "default":
+        print(
+            f"\nINFO: No year [-y || --year] was provided, "
+            f"the data got filtered by the latest year with available data ({max_year}) !\n")
         return max_year
 
     try:
