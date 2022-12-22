@@ -1,5 +1,6 @@
 import collections
 import sys
+import constants
 
 
 def year_handler(dog_data, year):
@@ -142,3 +143,29 @@ def build_most_common_names_msg(most_common_names):
 
 def dog_names_by_length(dog_names, length):
     return "\n".join(set([f"|| - {dog_name} ||" for dog_name in dog_names if len(dog_name) == length]))
+
+
+def check_arguments(parser):
+    if len(sys.argv) == 1 and "wuff.py" in sys.argv[0]:
+        parser.print_help()
+        sys.exit()
+
+    elif not any(item.lower() in sys.argv for item in constants.parser_functions):
+        if "-h" in sys.argv or "--h" in sys.argv:
+            parser.print_help()
+            sys.exit()
+
+        else:
+            sys.exit(constants.missing_function_parameter)
+
+    for arg in sys.argv:
+        if "-h" in sys.argv or "--h" in sys.argv:
+            parser.print_help()
+            sys.exit()
+
+        elif arg.lower().startswith("-") and arg not in constants.parser_options or arg.lower().startswith(
+                "--") and arg not in constants.parser_options:
+            try:
+                int(arg)
+            except ValueError:
+                sys.exit(constants.unexpected_arg)

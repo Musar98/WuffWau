@@ -3,6 +3,7 @@ import pathlib
 from functions import print_msg_builder
 
 parser_functions = ["find", "stats", "create"]
+parser_options = ["-n", "--name", "-o", "--output-dir", "-y", "--year", "-h", "--h"]
 
 current_dir = pathlib.Path.cwd()
 
@@ -84,3 +85,8 @@ missing_function_parameter = print_msg_builder("NO VALID FUNCTION PROVIDED", "Th
                                                "|| - For additional information,\n"
                                                "||   add the [-h | --help] flag\n"
                                                "||   to your previous command.")
+
+unexpected_arg = print_msg_builder("UNEXPECTED ARGUMENT", "You have passed an unexpected argument !",
+                                   "For information about available arguments,\n"
+                                   "||   add the [-h | --help] flag\n"
+                                   "||   to your previous command.")

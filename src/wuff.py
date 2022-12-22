@@ -5,6 +5,7 @@ import constants
 from wuff_create import wuff_create
 from wuff_find import find_dog
 from wuff_stats import wuff_stats
+from functions import check_arguments
 
 
 def run(args):
@@ -42,17 +43,7 @@ def get_parser():
 
 def wuff(args=None):
     parser = get_parser()
-    if len(sys.argv) == 1 and "wuff.py" in sys.argv[0]:
-        parser.print_help()
-        sys.exit()
-
-    elif not any(item.lower() in sys.argv for item in constants.parser_functions):
-        if "-h" in sys.argv or "--h" in sys.argv:
-            parser.print_help()
-            sys.exit()
-
-        else:
-            sys.exit(constants.missing_function_parameter)
+    check_arguments(parser)
 
     parsed = parser.parse_args(args)
 
