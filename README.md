@@ -21,7 +21,7 @@ dogname_birthyear.file-extension
 
    ```python src/wuff.py```
 
-   (keep in mind that you will still have to install the dependencies !)
+   (keep in mind that you will still have to install the dependencies, for e.g. with ```pip install .``` !)
 
 ### Additional information
 
