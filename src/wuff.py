@@ -31,8 +31,7 @@ def run(args):
 
 def get_parser():
     parser = argparse.ArgumentParser(description=constants.parser_description,
-                                     formatter_class=argparse.RawTextHelpFormatter, usage=argparse.SUPPRESS)
-
+                                     formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument("function", help=constants.function_help_message)
     parser.add_argument("-y", "--year", default="default", help=constants.year_help_message)
     parser.add_argument("-n", "--name", help=constants.name_help_message)
