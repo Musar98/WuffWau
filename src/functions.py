@@ -1,12 +1,16 @@
+import collections
 import sys
 
 
 def year_handler(dog_data, year):
-    years_with_available_data = set([int(row["StichtagDatJahr"]) for row in dog_data])
+    years_with_available_data = [int(row["StichtagDatJahr"]) for row in dog_data]
     max_year = max(years_with_available_data)
     min_year = min(years_with_available_data)
     valid_years_msg = f"Please choose a year between {min_year} and {max_year} (both inclusive)"
-    invalid_year_msg = "The year must be a positive integer!"
+    error_msg = print_msg_builder("ERROR", "The year must be a positive integer!")
+    no_data_available_msg = print_msg_builder("NO DATA",
+                                              f"Unfortunately, there is no data available for the year: {year}",
+                                              valid_years_msg)
 
     if year == "default":
         print(
@@ -18,18 +22,15 @@ def year_handler(dog_data, year):
         year = int(year)
 
     except ValueError:
-        error_msg = print_msg_builder("ERROR", invalid_year_msg)
         sys.exit(error_msg)
 
     if min_year <= year <= max_year:
         return year
 
     elif year < 0:
-        error_msg = print_msg_builder("ERROR", invalid_year_msg)
         sys.exit(error_msg)
 
-    sys.exit(f"Unfortunately, there is no data available for the year: {year}\n"
-             f"{valid_years_msg}")
+    sys.exit(no_data_available_msg)
 
 
 def print_header(output_length, title):
@@ -71,7 +72,7 @@ def print_msg_builder(title, msg_body, additional_msg=""):
     if len(additional_msg) > 0:
         return f"{header}\n" \
                f"|| - {msg_body} ||\n" \
-               f"|| - {additional_msg} ||\n" \
+               f"|| - {additional_msg}  ||\n" \
                f"{footer}"
 
     else:
@@ -80,12 +81,63 @@ def print_msg_builder(title, msg_body, additional_msg=""):
                f"{footer}"
 
 
-def process_common_names(raw_names):
-    names_and_occurrences = [f"|| - Name: {dog[0]}, Occurrences: {dog[1]} ||" for dog in raw_names]
+def get_most_common_names(dog_data, dog_names):
+    male_dog_names = [dog["HundenameText"] for dog in dog_data
+                      if dog["HundenameText"] != "?"
+                      and dog["SexHundLang"][0] == "m"]
 
-    longest_output = max([len(name_and_occ) for name_and_occ in names_and_occurrences])
+    female_dog_names = [dog["HundenameText"] for dog in dog_data
+                        if dog["HundenameText"] != "?"
+                        and dog["SexHundLang"][0] == "w"]
 
-    return {"names_and_occurrences": names_and_occurrences, "longest_output": longest_output}
+    most_common_dog_names_overall = collections.Counter(dog_names).most_common(10)
+    most_common_male_dog_names = collections.Counter(male_dog_names).most_common(10)
+    most_common_female_dog_names = collections.Counter(female_dog_names).most_common(10)
+
+    names_and_occurs_overall = [f"|| - Name: {dog[0]}, Occurrences: {dog[1]} ||" for dog in
+                                most_common_dog_names_overall]
+    names_and_occurs_males = [f"|| - Name: {dog[0]}, Occurrences: {dog[1]} ||" for dog in most_common_male_dog_names]
+    names_and_occurs_female = [f"|| - Name: {dog[0]}, Occurrences: {dog[1]} ||" for dog in
+                               most_common_female_dog_names]
+
+    most_common_names = {"most_common_overall": names_and_occurs_overall,
+                         "most_common_male": names_and_occurs_males,
+                         "most_common_female": names_and_occurs_female}
+
+    return most_common_names
+
+
+def build_most_common_names_msg(most_common_names):
+    join_most_common_dog_names = "\n".join(most_common_names["most_common_overall"])
+    join_most_common_male_dog_names = "\n".join(most_common_names["most_common_male"])
+    join_most_common_female_dog_names = "\n".join(most_common_names["most_common_female"])
+
+    longest_output_overall = max(
+        [len(name_and_occ) for name_and_occ in most_common_names["most_common_overall"]])
+    longest_output_males = max([len(name_and_occ) for name_and_occ in most_common_names["most_common_male"]])
+    longest_output_females = max(
+        [len(name_and_occ) for name_and_occ in most_common_names["most_common_female"]])
+
+    header_most_common_names_overall = print_header(longest_output_overall,
+                                                    "TOP 10 MOST COMMON OVERALL DOG NAMES")
+    header_most_common_male_dog_names = print_header(longest_output_males,
+                                                     "TOP 10 MOST COMMON MALE DOG NAMES")
+    header_most_common_female_dog_names = print_header(longest_output_females,
+                                                       "TOP 10 MOST COMMON FEMALE DOG NAMES")
+
+    footer_overall = print_footer(longest_output_overall)
+    footer_male = print_footer(longest_output_males)
+    footer_female = print_footer(longest_output_females)
+
+    return f"\n{header_most_common_names_overall}" \
+           f"\n{join_most_common_dog_names}\n" \
+           f"{footer_overall}\n" \
+           f"\n{header_most_common_male_dog_names}" \
+           f"\n{join_most_common_male_dog_names}\n" \
+           f"{footer_male}\n" \
+           f"\n{header_most_common_female_dog_names}" \
+           f"\n{join_most_common_female_dog_names}\n" \
+           f"{footer_female}\n"
 
 
 def dog_names_by_length(dog_names, length):
